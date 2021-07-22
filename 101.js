@@ -10,22 +10,15 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isSymmetric = function(root) {
-  const stack1 = [root.left], stack2 = [root.right];
+ var isSymmetric = function(root) {
+  return compare(root.left, root.right);
 
-  while (stack1.length > 0 || stack2.length > 0) {
-    const node1 = stack1.pop();
-    const node2 = stack2.pop();
-
-    if (node1 == null && node2 == null) continue;
+  function compare(node1, node2) {
+    if (node1 == null && node2 == null) return true;
     if (node1 == null || node2 == null) return false;
-    if (node1.val !== node2.val) return false;
 
-    stack1.push(node1.left);
-    stack2.push(node2.right);
-
-    stack1.push(node1.right);
-    stack2.push(node2.left);
+    return node1.val === node2.val &&
+      compare(node1.left, node2.right) &&
+      compare(node1.right, node2.left);
   }
-  return true;
 };
