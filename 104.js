@@ -11,6 +11,17 @@
  * @return {number}
  */
 var maxDepth = function(root) {
-  const c = n => n ? Math.max(c(n.left), c(n.right)) + 1 : 0;
-  return c(root);
+  if (!root) return 0;
+
+  let d = 1;
+  let queue = [root];
+  while (queue.length > 0) {
+    queue = queue.reduce((s, x) => {
+      if (x.left) s.push(x.left);
+      if (x.right) s.push(x.right);
+      return s;
+    }, []);
+    d++;
+  }
+  return d - 1;
 };
