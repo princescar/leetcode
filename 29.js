@@ -4,26 +4,32 @@
  * @return {number}
  */
 var divide = function(dividend, divisor) {
-  if (dividend === -2147483648 && divisor === -1) {
-    return 2147483647;
-  }
-  let d = dividend, r = divisor;
-  let p = true;
-  if (dividend < 0) {
-    d = -dividend;
-    p = !p;
-  }
-  if (divisor < 0) {
-    r = -divisor;
-    p = !p;
-  }
+  if (dividend === -2147483648 && divisor === -1) return 2147483647;
+  if (divisor === 1) return dividend;
+  if (divisor === -1) return -dividend;
 
+  const s = dividend < 0 && divisor < 0 || dividend >= 0 && divisor > 0;
+
+  let d = Math.abs(dividend), r = Math.abs(divisor);
   let q = 0;
-  let x = d;
-  while (x >= r) {
-    x -= r;
-    q += 1;
+  while (d >= r) {
+    let t = r, i = 0;
+    while(d >= t) {
+      if (t > 1073741823) break;
+      t <<= 1;
+      i += 1;
+    }
+    t >>= 1;
+    i -= 1;
+
+    if (i >= 0) {
+      q += 1 << i;
+      d -= t;
+    } else {
+      q += 1;
+      d -= r;
+    }
   }
 
-  return p ? q : -q;
+  return s ? q : -q;
 };
