@@ -10,7 +10,7 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
- var isSymmetric = function(root) {
+var isSymmetric = function(root) {
   return compare(root.left, root.right);
 
   function compare(node1, node2) {
