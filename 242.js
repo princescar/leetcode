@@ -5,15 +5,12 @@
  */
 var isAnagram = function(s, t) {
   if (s.length !== t.length) return false;
-  const a = 'a'.charCodeAt(0);
-  const count = [];
+  const map = new Map();
   for(let i = 0; i < s.length; i++) {
-    const c1 = s.charCodeAt(i) - a;
-    const c2 = t.charCodeAt(i) - a;
-    count[c1] = (count[c1] || 0) + 1;
-    count[c2] = (count[c2] || 0) - 1;
+    map.set(s[i], (map.get(s[i]) || 0) + 1);
+    map.set(t[i], (map.get(t[i]) || 0) - 1);
   }
-  for(let n of count) {
+  for(let [_, n] of map) {
     if (n) return false;
   }
   return true;
