@@ -4,11 +4,6 @@
  */
 var isPowerOfThree = function(n) {
   if (n <= 0) return false;
-  if (n === 1) return true;
-  let x = n;
-  while(x !== 1) {
-    if (x % 3) return false;
-    x = x / 3;
-  }
-  return true;
+  const p = [1, 3, 9, 27, 81, 243, 729, 2187, 6561, 19683, 59049, 177147, 531441, 1594323, 4782969, 14348907, 43046721, 129140163, 387420489, 1162261467];
+  return p.includes(n);
 };
