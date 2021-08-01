@@ -5,21 +5,23 @@
  */
 var search = function(nums, target) {
   const n = nums.length
-  let i = 0, j = n - 1;
-  while (i < j - 1) {
-    const mid = Math.floor((i + j) / 2);
-    if (nums[mid] < nums[i]) j = mid;
-    else if (nums[mid] > nums[j]) i = mid;
-    else break;
-  }
-  const start = nums[i] > nums[j] ? j : i;
-  i = 0; j = n - 1;
-  while (i <= j) {
-    const mid = Math.floor((i + j) / 2);
-    const realMid = (mid + start) % n;
-    if (nums[realMid] < target) i = mid + 1;
-    else if (nums[realMid] > target) j = mid - 1;
-    else return realMid;
+  let left = 0, right = n - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (target === nums[mid]) return mid;
+    if (nums[mid] >= nums[left]) { // left -> mid is sorted.
+      if (target <= nums[mid] && target >= nums[left]) { // target is in range of left -> mid, search left.
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
+    } else { // mid -> right is sorted.
+      if (target >= nums[mid] && target <= nums[right]) { // target is in range of mid -> right, search right.
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
   }
   return -1;
 };
