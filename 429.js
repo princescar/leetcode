@@ -13,10 +13,11 @@
 var levelOrder = function(root) {
   if (root === null) return [];
   const result = [];
-  let nodes = [root];
-  while (nodes.length > 0) {
-    result.push(nodes.map(x => x.val));
-    nodes = nodes.reduce((a, x) => [...a, ...x.children], []);
+  dfs(root, 0);
+  function dfs(node, level) {
+    if (!result[level]) result[level] = [];
+    result[level].push(node.val);
+    node.children.forEach(x => dfs(x, level + 1));
   }
   return result;
 };
