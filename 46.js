@@ -3,19 +3,16 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-  const queue = [[nums[0]]];
-  for (let i = 1; i < nums.length; i++) {
-    const x = nums[i];
-    let n = queue.length;
-    while (n > 0) {
-      const arr = queue.shift();
-      for (let j = 0; j <= arr.length; j++) {
-        const item = [...arr];
-        item.splice(j, 0, x);
-        queue.push(item);
+  return p([]);
+
+  function p(arr) {
+    if (arr.length === nums.length) return [arr];
+    const result = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (!arr.includes(nums[i])) {
+        result.push(...p([...arr, nums[i]]));
       }
-      n--;
     }
+    return result;
   }
-  return queue;
 };
