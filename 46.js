@@ -3,25 +3,19 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-  const result = [];
-  p(0);
-  return result;
-
-  function p(start) {
-    if (start === nums.length) {
-      result.push([...nums]);
-    } else {
-      for (let i = start; i < nums.length; i++) {
-        swap(start, i);
-        p(start + 1);
-        swap(start, i);
+  const queue = [[nums[0]]];
+  for (let i = 1; i < nums.length; i++) {
+    const x = nums[i];
+    let n = queue.length;
+    while (n > 0) {
+      const arr = queue.shift();
+      for (let j = 0; j <= arr.length; j++) {
+        const item = [...arr];
+        item.splice(j, 0, x);
+        queue.push(item);
       }
+      n--;
     }
   }
-
-  function swap(i, j) {
-    const temp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = temp;
-  }
+  return queue;
 };
