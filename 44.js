@@ -4,29 +4,36 @@
  * @return {boolean}
  */
 var isMatch = function(s, p) {
-  const dp = [];
-  return match(0, 0);
-
-  function match(si, pi) {
-    if (pi === p.length) return si === s.length;
-    if (!dp[si]) dp[si] = [];
-    if (dp[si][pi] != null) return dp[si][pi];
-
-    let result = false;
-    if (p[pi] === '?') {
-      result = match(si + 1, pi + 1);
+  let si = pi = 0;
+  let back = star = -1;
+  while (si < s.length) {
+    if (s[si] === p[pi] || p[pi] === '?') {
+      si++;
+      pi++;
     } else if (p[pi] === '*') {
-      for (let i = si; i <= s.length; i++) {
-        if (match(i, pi + 1)) {
-          result = true;
-          break;
-        }
-      }
+      // Remember the star position and tried position.
+      // Suppose the star match 0 letters,
+      // and try to match the followings.
+      back = si;
+      star = pi;
+      pi++;
+    } else if (back >= 0) {
+      // Increase last tried position by 1.
+      // Back si to the last tried position.
+      // Back pi to the next position of star.
+      // Then re-match the followings.
+      back++;
+      si = back;
+      pi = star + 1;
     } else {
-      result = s[si] === p[pi] && match(si + 1, pi + 1);
+      // Either pi runs the end,
+      // or both s[si] and p[pi] are english letters but not the same,
+      //   and there is no star tried before so no chance to re-match.
+      return false;
     }
-
-    dp[si][pi] = result;
-    return result;
   }
+  // si runs out.
+  // Either there is no any p left to match,
+  // or the rest of p is all stars (which all match 0 letters).
+  return p.slice(pi).split('').every(x => x === '*');
 };
