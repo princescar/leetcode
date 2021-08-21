@@ -31,7 +31,3 @@
     }
   }
 };
-
-console.time()
-console.log(combine(20,20));
-console.timeEnd();
