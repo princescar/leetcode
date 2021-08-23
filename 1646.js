@@ -21,6 +21,3 @@ var getMaximumGenerated = function(n) {
     }
   }
 };
-console.time();
-console.log(getMaximumGenerated(100));
-console.timeEnd();
