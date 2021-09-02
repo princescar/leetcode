@@ -3,9 +3,10 @@
  * @return {boolean}
  */
  var containsDuplicate = function(nums) {
-  const n = nums.sort((a, b) => a - b);
-  for (let i = 1; i < nums.length; i++) {
-    if (n[i] === n[i - 1]) return true;
+  const set = new Set();
+  for (const x of nums) {
+    if (set.has(x)) return true;
+    else set.add(x);
   }
   return false;
 };
