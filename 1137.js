@@ -1,11 +1,12 @@
-const dp = [0,1,1];
 /**
  * @param {number} n
  * @return {number}
  */
 var tribonacci = function(n) {
-  if (dp[n] == null) {
-    dp[n] = tribonacci(n - 1) + tribonacci(n - 2) + tribonacci(n - 3);
+  const cache = [0, 1, 1];
+  if (n < 3) return cache[n];
+  for (let i = 3; i <= n; i++) {
+    cache[i] = cache[i - 1] + cache[i - 2] + cache[i - 3];
   }
-  return dp[n];
+  return cache[n];
 };
