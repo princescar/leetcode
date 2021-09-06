@@ -3,10 +3,11 @@
  * @return {number}
  */
 var climbStairs = function(n) {
-  const cache = [,1,2];
-  if (n < 3) return cache[n];
-  for (let i = 3; i <= n; i++) {
-    cache[i] = cache[i - 1] + cache[i - 2];
+  let p = 0, q = 0, r = 1;
+  for (let i = 1; i <= n; i++) {
+    p = q;
+    q = r;
+    r = p + q;
   }
-  return cache[n];
+  return r;
 };
