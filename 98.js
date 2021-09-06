@@ -11,13 +11,17 @@
  * @return {boolean}
  */
 var isValidBST = function(root) {
+  const stack = [];
   let prev = -Infinity;
-  return inOrderTraverse(root);
-  function inOrderTraverse(node) {
-    if (node == null) return true;
-    if (!inOrderTraverse(node.left)) return false;
-    if (prev >= node.val) return false;
-    prev = node.val;
-    return inOrderTraverse(node.right);
+  while (stack.length > 0 || root != null) {
+    while (root) {
+      stack.push(root);
+      root = root.left;
+    }
+    root = stack.pop();
+    if (prev >= root.val) return false;
+    prev = root.val;
+    root = root.right;
   }
+  return true;
 };
