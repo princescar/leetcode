@@ -4,9 +4,11 @@
  */
 var minCostClimbingStairs = function(cost) {
   const n = cost.length;
-  const cache = [cost[0], cost[1]];
+  let p = cost[0], q = cost[1], r = 0;
   for (let i = 2; i < n; i++) {
-    cache[i] = cost[i] + Math.min(cache[i - 1], cache[i - 2]);
+    r = cost[i] + Math.min(p, q);
+    p = q;
+    q = r;
   }
-  return Math.min(cache[n - 1], cache[n - 2]);
+  return Math.min(p, q);
 };
