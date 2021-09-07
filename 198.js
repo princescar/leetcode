@@ -3,12 +3,13 @@
  * @return {number}
  */
 var rob = function(nums) {
-  const cache = [];
-  return r(0);
-  function r(i) {
-    if (i >= nums.length) return 0;
-    if (cache[i] == null)
-      cache[i] = Math.max(nums[i] + r(i + 2), r(i + 1));
-    return cache[i];
+  const n = nums.length;
+  if (n === 1) return nums[0];
+  let p = 0, q = nums[0], r = 0;
+  for (let i = 1; i < n; i++) {
+    r = Math.max(p + nums[i], q);
+    p = q;
+    q = r;
   }
+  return r;
 };
