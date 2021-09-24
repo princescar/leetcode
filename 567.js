@@ -10,13 +10,19 @@ var checkInclusion = function(s1, s2) {
   for (let i = 0; i < s1.length; i++) {
     map[s1.charCodeAt(i) - A]++;
   }
-  for (let i = 0; i < s1.length; i++) {
-    map[s2.charCodeAt(i) - A]--;
+  let l = r = 0, n = s1.length;
+  while (r < s2.length) {
+    const lc = s2.charCodeAt(l) - A;
+    const rc = s2.charCodeAt(r) - A;
+    if (map[lc] < 0) {
+      map[lc]++;
+      l++;
+    } else {
+      if (map[rc] > 0) n--;
+      map[rc]--;
+      r++;
+    }
+    if (n === 0 && r - l  === s1.length) return true;
   }
-  for (let i = s1.length; i < s2.length; i++) {
-    if (map.every(x => x === 0)) return true;
-    map[s2.charCodeAt(i) - A]--;
-    map[s2.charCodeAt(i - s1.length) - A]++;
-  }
-  return map.every(x => x === 0);
+  return false;
 };
