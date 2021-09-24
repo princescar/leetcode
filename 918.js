@@ -3,26 +3,25 @@
  * @return {number}
  */
 var maxSubarraySumCircular = function(nums) {
-  const n = nums.length;
+  // 1-inteval max.
   let max = -Infinity, localMax = -Infinity;
-  for (let i = 0, si = 0; i < 2 * n; i++) {
-    const j = i % n;
-    if (i % n === si) {
-      let min = nums[si], sum = nums[si], minI = si;
-      for (let k = si + 1; k < si + n; k++) {
-        const l = k % n;
-        sum += nums[l];
-        if (sum < min) {
-          min = sum;
-          minI = l;
-        }
-      }
-      localMax -= min;
-      si = minI + 1;
-    }
-    if (nums[j] >= localMax + nums[j]) si = j;
-    localMax = Math.max(nums[j], localMax + nums[j]);
+  for (const x of nums) {
+    localMax = Math.max(x, localMax + x);
     max = Math.max(max, localMax);
   }
+
+  // 2-intervals
+  const leftMax = [nums[0]];
+  let sum = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    sum += nums[i];
+    leftMax[i] = Math.max(leftMax[i - 1], sum);
+  }
+  sum = 0;
+  for (let i = nums.length - 1; i >= 1; i--) {
+    sum += nums[i];
+    max = Math.max(max, sum + leftMax[i - 1]);
+  }
+
   return max;
 };
