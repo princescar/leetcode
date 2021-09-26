@@ -10,15 +10,11 @@
  * @return {ListNode}
  */
 var deleteDuplicates = function(head) {
-  const dummy = new ListNode(-101);
-  let slow = dummy, fast = head;
-  while (fast) {
-    if (fast.val !== slow.val) {
-      slow.next = fast;
-      slow = fast;
-    }
-    fast = fast.next;
+  let node = head, prev = null;
+  while (node) {
+    if (prev && node.val === prev.val) prev.next = node.next;
+    else prev = node;
+    node = node.next;
   }
-  slow.next = null;
-  return dummy.next;
+  return head;
 };
