@@ -3,21 +3,25 @@
  * @param {number} amount
  * @return {number}
  */
-var coinChange = function(coins, amount) {
-  const dp = [0];
-  const count = change(amount);
-  return count === Infinity ? -1 : count;
-
-  function change(amount) {
-    if (dp[amount] == null) {
-      let min = Infinity;
-      for (const coin of coins) {
-        const remain = amount - coin;
-        if (remain >= 0)
-          min = Math.min(min, 1 + change(remain));
+ var coinChange = function(coins, amount) {
+  const set = new Set([0]);
+  let count = 0;
+  while (!set.has(amount)) {
+    const add = new Set();
+    for (const x of set)
+      for (const y of coins)
+        add.add(x + y);
+    let min = Infinity;
+    for (const x of add) {
+      if (!set.has(x)) {
+        set.add(x);
+        min = Math.min(min, x);
       }
-      dp[amount] = min;
     }
-    return dp[amount];
+    if (min > amount) return -1;
+    count++;
   }
+  return count;
 };
+
+console.log(coinChange([2], 3));
