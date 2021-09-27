@@ -4,15 +4,14 @@
  */
 var isValid = function(s) {
   const stack = [];
-  const invalid = Array.prototype.find.call(s, c1 => {
-    if (c1 === '(' || c1 === '{' || c1 === '[') {
-      stack.push(c1);
+  const map = { ')': '(', '}': '{', ']': '[' };
+  for (const ch of s) {
+    const pair = map[ch];
+    if (pair) {
+      if (stack.pop() !== pair) return false;
     } else {
-      const c2 = stack.pop();
-      return (c1 === ')' && c2 !== '(') ||
-        (c1 === '}' && c2 !== '{') ||
-        (c1 === ']' && c2 !== '[')
+      stack.push(ch);
     }
-  });
-  return !invalid && stack.length === 0;
+  }
+  return true;
 };
