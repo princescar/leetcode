@@ -2,24 +2,23 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-var threeSum = function(nums) {
-  const n = nums.sort((a, b) => a - b);
-  const result = new Set();
-  for (let i = 0; n[i] <= 0; i++) {
-    let j = 0; k = n.length - 1;
-    while (j < k) {
-      const s = n[i] + n[j] + n[k];
-      if (s > 0) {
-        const c = n[k];
-        while(n[--k] === c && k > j);
+ var threeSum = function(nums) {
+  nums.sort((a, b) => a - b);
+  const ans = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === nums[i - 1]) continue;
+    let l = i + 1; r = nums.length - 1;
+    while (l < r) {
+      if (nums[l] + nums[r] < -nums[i]) {
+        l++;
+      } else if (nums[l] + nums[r] > -nums[i]) {
+        r--;
       } else {
-        if (s === 0 && j !== i && k !== i) {
-          result.add([n[i], n[j], n[k]].sort((a, b) => a - b).join());
-        }
-        const c = n[j];
-        while(n[++j] === c && j < k);
-      }
+        ans.push([nums[i], nums[l++], nums[r--]]);
+        while (nums[l - 1] === nums[l] && l < r) l++;
+        while (nums[r + 1] === nums[r] && l < r) r--;
+      };
     }
   }
-  return [...result].map(x => x.split(',').map(y => parseInt(y)));
+  return ans;
 };
