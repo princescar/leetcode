@@ -2,20 +2,11 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var sortColors = function(nums) {
-  let l = 0, r = nums.length - 1;
-  while (nums[l] === 0) l++;
-  while (nums[r] === 2) r--;
-  let i = l;
-  while (i <= r) {
-    if (nums[i] === 0 && i !== l) swap(i, l++);
-    else if (nums[i] === 2 && i !== r) swap(i, r--);
-    else i++;
-  }
-
-  function swap(i, j) {
-    const temp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = temp;
-  }
+ var sortColors = function(nums) {
+  const count = new Array(3).fill(0);
+  for (const x of nums) count[x]++;
+  let i = 0;
+  for (let j = 0; j < 3; j++)
+    for (let k = 0; k < count[j]; k++)
+      nums[i++] = j;
 };
