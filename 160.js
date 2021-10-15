@@ -11,30 +11,19 @@
  * @param {ListNode} headB
  * @return {ListNode}
  */
-var getIntersectionNode = function(headA, headB) {
-  let c1 = count(headA), c2 = count(headB);
-  let long = headA, short = headB;
-  if (c1 < c2) {
-    long = headB;
-    short = headA;
+ var getIntersectionNode = function(headA, headB) {
+  let lenA = 0, lenB = 0;
+  for (let node = headA; node; node = node.next) lenA++;
+  for (let node = headB; node; node = node.next) lenB++;
+  let nodeA = headA, nodeB = headB;
+  if (lenA > lenB) {
+    for (let i = 0; i < lenA - lenB; i++) nodeA = nodeA.next;
+  } else {
+    for (let i = 0; i < lenB - lenA; i++) nodeB = nodeB.next;
   }
-
-  for (let i = 0; i < Math.abs(c1 - c2); i++) {
-    long = long.next;
+  while (nodeA !== nodeB) {
+    nodeA = nodeA.next;
+    nodeB = nodeB.next;
   }
-
-  while(long && short) {
-    if (long === short) return long;
-    long = long.next;
-    short = short.next;
-  }
-
-  function count(head) {
-    let node = head, c = 0;
-    while(node) {
-      node = node.next;
-      c++;
-    }
-    return c;
-  }
+  return nodeA;
 };
