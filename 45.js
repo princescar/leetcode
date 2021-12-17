@@ -15,5 +15,3 @@ var jump = function(nums) {
   }
   return steps;
 };
-
-console.log(jump([1,2,1,1,1]));
