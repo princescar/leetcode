@@ -4,12 +4,11 @@
  * @return {number}
  */
 var numWaterBottles = function(numBottles, numExchange) {
-  return numBottles + exchange(numBottles);
-
-  function exchange(bottles) {
-    if (bottles < numExchange) return 0;
-    const full = Math.floor(bottles / numExchange);
-    const empty = full + bottles % numExchange;
-    return full + exchange(empty);
+  let ans = numBottles, empty = numBottles;
+  while (empty >= numExchange) {
+    const full = Math.floor(empty / numExchange);
+    ans += full;
+    empty = full + empty % numExchange;
   }
+  return ans;
 };
