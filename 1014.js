@@ -3,9 +3,10 @@
  * @return {number}
  */
 var maxScoreSightseeingPair = function(values) {
-  let ans = 0;
-  for (let i = 0; i < values.length; i++)
-    for (let j = 1; j <= 1000 && i + j < values.length; j++)
-      ans = Math.max(ans, values[i] + values[i + j] - j);
+  let ans = 0, x = values[0];
+  for (let i = 1; i < values.length; i++) {
+    ans = Math.max(ans, x + values[i] - i);
+    x = Math.max(x, values[i] + i);
+  }
   return ans;
 };
