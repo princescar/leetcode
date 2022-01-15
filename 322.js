@@ -3,7 +3,7 @@
  * @param {number} amount
  * @return {number}
  */
- var coinChange = function(coins, amount) {
+var coinChange = function(coins, amount) {
   const set = new Set([0]);
   let count = 0;
   while (!set.has(amount)) {
@@ -23,5 +23,3 @@
   }
   return count;
 };
-
-console.log(coinChange([2], 3));
