@@ -80,5 +80,3 @@
     }
   }
 };
-
-console.log(isMatch("mississippi", "mis*is*ip*."));
